@@ -1,20 +1,42 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
+import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import createLogger from 'redux-logger';
 
 import rootReducer from '../reducer';
 import DevTools from '../DevTools';
 
+// Instantiate suggested logger
+const logger = createLogger();
+
+//
+// // Create Store applying reducers and middleware
+// const store = createStore(
+//   rootReducer,
+//   applyMiddleware(
+//     thunkMiddleware, // lets us dispatch() functions
+//     loggerMiddleware // neat middleware that logs actions
+//   )
+// );
+//
+// export default store;
+//
+// store.dispatch(getUserMovies());
+// // Test:
+
+// store.dispatch(fetchUserData('http://localhost:4000/movies')).then(() =>
+// //   console.log(store.getState())
+// );
 /**
  * Entirely optional.
  * This tiny library adds some functionality to your DevTools,
  * by logging actions/state to your console. Used in conjunction
  * with your standard DevTools monitor gives you great flexibility.
  */
-const logger = createLogger();
-
-const middlewares = [promiseMiddleware, logger, require('redux-immutable-state-invariant')()];
+// const logger = createLogger();
+//
+const middlewares = [thunkMiddleware, logger, require('redux-immutable-state-invariant')()];
 
 // By default we try to read the key from ?debug_session=<key> in the address bar
 const getDebugSessionKey = function () {
